@@ -56,7 +56,7 @@
 	
 	<target name="packaging-parameters" description="faire un scp du fichier parameters.yml bien établi sur un autre serveur">
 		<echo msg="parameters.yml à passer en paramètre du build: uploader le fichier" />
-		<copy file="${WORKSPACE}/parameters.yml" todir="/tmp/07zr/app/config/" />
+		<exec command= "mv ${workspace}/parameters.yml" todir="/tmp/07zr/app/config/" />
 	</target>
 	
 	<target name="build" description="déploiement sur serveur">
