@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <project name="07zr" default="principal" basedir=".">
     <property name="version" value="0.0.1" />
+	<property name="build_directory" value="${project.basedir}/build" />
+	<property name="composer.args.no-progess" value="--no-progress" />
+	<property name="composer.args.no-interaction" value="--no-interaction" />
+	<property name="workspace" value="/var/lib/jenkins/workspace/PHP_PHING_07zr-dev" />
 
 	<target name="principal"
         description="Tache principale"
