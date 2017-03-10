@@ -1,0 +1,66 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="07zr" default="default" basedir=".">
+    <property name="version" value="0.0.1" />
+
+	<target name="default"
+        description="Tâche principale"
+        depends="clean,package"/>
+ 
+	<target name="clean" description="Vidage et création des répertoires de build">
+	    <delete dir="${build_directory}/prepare-build/build/api" />
+	    <delete dir="${build_directory}/prepare-build/build/code-browser" />
+	    <delete dir="${build_directory}/prepare-build/build/coverage" />
+	    <delete dir="${build_directory}/prepare-build/build/logs" />
+	    <delete dir="${build_directory}/prepare-build/build/pdepend" />
+		<delete dir="${build_directory}/prepare-build/build/package" />
+		<delete dir="${build_directory}/prepare-build/build/test" />
+			 
+		<mkdir dir="${build_directory}/prepare-build/build/api" />
+	    <mkdir dir="${build_directory}/prepare-build/build/code-browser" />
+	    <mkdir dir="${build_directory}/prepare-build/build/coverage" />
+	    <mkdir dir="${build_directory}/prepare-build/build/logs" />
+	    <mkdir dir="${build_directory}/prepare-build/build/pdepend" />
+		<mkdir dir="${build_directory}/prepare-build/build/package" />
+		<mkdir dir="${build_directory}/prepare-build/build/test" />
+	</target>
+     		 
+	<target name="package">
+		<echo msg="supprimer le dossier /tmp/07zr/" />
+		<exec command="rm -rf /tmp/07zr/" logoutput="true" />
+		
+		<echo msg="créer le dossier /tmp/07zr/" />
+		<exec command="mkdir -p /tmp/07zr/" logoutput="true" />
+		
+		<echo msg="Créer le fichier tar.gz" />
+		<tar destfile="${build_directory}/prepare-build/build/package/O7zr.tar.gz" compression="gzip" 
+			excludes=".git/**" basedir="${project.basedir}/"/>
+		<copy file="${build_directory}/prepare-build/build/package/07zr.tar.gz" todir="/tmp/O7zr/"/>		
+		
+		<echo msg="detarrer la source" />
+		<untar  file="/tmp/07zr/07zr.tar.gz" todir="/tmp/07zr/" />		
+		<echo msg="supprimer le fichier tar.gz" />
+		<exec command="rm /tmp/07zr/07zr.tar.gz" logoutput="true" />
+		
+		<echo msg="supprimer le dossier build dans /tmp/07zr/" />
+		<exec command="rm -rf /tmp/07zr/${build_directory}" logoutput="true" />
+    </target>
+	
+	<target name="install-composer" description="installation vendor">
+		<composer composer="/usr/local/bin/composer" command="install">
+			<arg value="${composer.args.no-progess}"/>
+			<arg value="${composer.args.no-interaction}"/>
+		</composer>
+		<composer composer="/usr/local/bin/composer" command="install">...</composer>
+	</target>
+	
+	<target name="packaging-parameters" description="faire un scp du fichier parameters.yml bien établi sur un autre serveur">
+		<echo msg="parameters.yml à passer en paramètre du build: uploader le fichier" />
+		<copy file="${WORKSPACE}/parameters.yml" todir="/tmp/07zr/app/config/" />
+	</target>
+	
+	<target name="build" description="déploiement sur serveur">
+		<echo msg="déploiement du package" />
+	</target>
+	
+</project>
