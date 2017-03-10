@@ -36,9 +36,9 @@
 		<exec command="mkdir -p /tmp/07zr/" logoutput="true" />
 		
 		<echo msg="Creer le fichier tar.gz" />
-		<tar destfile="${build_directory}/prepare-build/build/package/O7zr.tar.gz" compression="gzip" 
+		<tar destfile="${build_directory}/prepare-build/build/package/07zr.tar.gz" compression="gzip" 
 			excludes=".git/**" basedir="${project.basedir}/"/>
-		<copy file="${build_directory}/prepare-build/build/package/07zr.tar.gz" todir="/tmp/O7zr/"/>		
+		<copy file="${build_directory}/prepare-build/build/package/07zr.tar.gz" todir="/tmp/07zr/"/>		
 		
 		<echo msg="detarrer la source" />
 		<untar  file="/tmp/07zr/07zr.tar.gz" todir="/tmp/07zr/" />		
