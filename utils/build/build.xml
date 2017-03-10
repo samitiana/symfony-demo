@@ -1,9 +1,9 @@
 
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="07zr" default="default" basedir=".">
+<project name="07zr" default="principal" basedir=".">
     <property name="version" value="0.0.1" />
 
-	<target name="default"
+	<target name="principal"
         description="Tâche principale"
         depends="clean,package"/>
  
