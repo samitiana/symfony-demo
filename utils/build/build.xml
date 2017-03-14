@@ -27,6 +27,7 @@
 		<tar destfile="${build_directory}/package/07zr-src.tar.gz" compression="gzip"> 
 			<fileset dir="${project.basedir}/" defaultexcludes="true">
 				<exclude name="${build_directory}/**" />
+				<exclude name="vendor/**" />
 			</fileset>
 		</tar>	
 	</target>
