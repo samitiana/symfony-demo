@@ -42,7 +42,6 @@
 
 	<target name="build" description="installation vendor" depends="prepare">
 		<echo msg="composer install" />
-		<c
 		<composer composer="/usr/local/bin/composer" command="install">
 			<arg value="${composer.args.no-progess}"/>
 			<arg value="${composer.args.no-interaction}"/>
