@@ -1,16 +1,9 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project name="07zr" default="principal" basedir=".">
-    <property name="version" value="0.0.1" />
-	<property name="build_directory" value="${project.basedir}/build" />
-	<property name="composer.args.no-progess" value="--no-progress" />
-	<property name="composer.args.no-interaction" value="--no-interaction" />
-	<property name="workspace" value="/var/lib/jenkins/workspace/PHP_PHING_07zr-dev" />
-
-	<target name="principal"
-        description="Tache principale"
-        depends="clean,package"/>
+<project name="07zr" default="ppl" basedir=".">
+	<property file="./utils/build/build.properties" />
+	<target name="ppl" description="Tache principale" depends="clean"/>
  
-	<target name="clean" description="Vidage et creation des repertoires de build">
+	<target name="clean" description="supprime les repertoires de build">
 	    <delete dir="${build_directory}/prepare-build/build/api" />
 	    <delete dir="${build_directory}/prepare-build/build/code-browser" />
 	    <delete dir="${build_directory}/prepare-build/build/coverage" />
@@ -18,7 +11,9 @@
 	    <delete dir="${build_directory}/prepare-build/build/pdepend" />
 		<delete dir="${build_directory}/prepare-build/build/package" />
 		<delete dir="${build_directory}/prepare-build/build/test" />
-			 
+	</target>
+	
+	<target name="prepare" description="crée les repertoires de build">
 		<mkdir dir="${build_directory}/prepare-build/build/api" />
 	    <mkdir dir="${build_directory}/prepare-build/build/code-browser" />
 	    <mkdir dir="${build_directory}/prepare-build/build/coverage" />
@@ -28,44 +23,30 @@
 		<mkdir dir="${build_directory}/prepare-build/build/test" />
 	</target>
      		 
-	<target name="package">
-		<echo msg="supprimer le dossier /tmp/07zr/" />
-		<exec command="rm -rf /tmp/07zr/" logoutput="true" />
-		
-		<echo msg="creer le dossier /tmp/07zr/" />
-		<exec command="mkdir -p /tmp/07zr/" logoutput="true" />
-		
-		<echo msg="Creer le fichier tar.gz" />
-		<tar destfile="${build_directory}/prepare-build/build/package/07zr.tar.gz" compression="gzip"> 
-			<fileset dir="${project.basedir}/" defaultexcludes="true" />
+	<target name="sdist" description="crée une archive de distribution des sources" depends="prepare">
+		<echo msg="Creer le fichier src.tar.gz" />
+		<tar destfile="${build_directory}/prepare-build/build/package/07zr-src.tar.gz" compression="gzip"> 
+			<fileset dir="${project.basedir}/" defaultexcludes="true">
+				<exclude name="${build_directory}/**" />
+			</fileset>
 		</tar>	
-			
-		<copy file="${build_directory}/prepare-build/build/package/07zr.tar.gz" todir="/tmp/07zr/"/>		
-		
-		<echo msg="detarrer la source" />
-		<untar  file="/tmp/07zr/07zr.tar.gz" todir="/tmp/07zr/" />		
-		<echo msg="supprimer le fichier tar.gz" />
-		<exec command="rm /tmp/07zr/07zr.tar.gz" logoutput="true" />
-		
-		<echo msg="supprimer le dossier build dans /tmp/07zr/" />
-		<exec command="rm -rf /tmp/07zr/${build_directory}" logoutput="true" />
-    </target>
+	</target>
 	
-	<target name="install-composer" description="installation vendor">
+	<target name="bdist" description="crée une archive avec vendor" depends="build">
+		<echo msg="Creer le fichier bin.tar.gz" />
+		<tar destfile="${build_directory}/prepare-build/build/package/07zr-bin.tar.gz" compression="gzip"> 
+			<fileset dir="${project.basedir}/" defaultexcludes="true">
+				<exclude name="${build_directory}/**" />
+			</fileset>
+		</tar>	
+	</target>
+
+	<target name="build" description="installation vendor" depends="prepare">
+		<echo msg="composer install" />
 		<composer composer="/usr/local/bin/composer" command="install">
 			<arg value="${composer.args.no-progess}"/>
 			<arg value="${composer.args.no-interaction}"/>
 		</composer>
-		<composer composer="/usr/local/bin/composer" command="install">...</composer>
 	</target>
-	
-	<target name="packaging-parameters" description="faire un scp du fichier parameters.yml bien etabli sur un autre serveur">
-		<echo msg="parameters.yml a passer en parametre du build: uploader le fichier" />
-		<exec command= "mv ${workspace}/parameters.yml /tmp/07zr/app/config/" />
-	</target>
-	
-	<target name="build" description="deploiement sur serveur">
-		<echo msg="deploiement du package" />
-	</target>
-	
+		
 </project>
