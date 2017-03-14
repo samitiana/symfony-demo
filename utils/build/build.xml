@@ -1,31 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<project name="07zr" default="ppl" basedir=".">
+<project name="07zr" default="build" basedir=".">
 	<property file="./utils/build/build.properties" />
-	<target name="ppl" description="Tache principale" depends="clean"/>
- 
+	 
 	<target name="clean" description="supprime les repertoires de build">
-	    <delete dir="${build_directory}/prepare-build/build/api" />
-	    <delete dir="${build_directory}/prepare-build/build/code-browser" />
-	    <delete dir="${build_directory}/prepare-build/build/coverage" />
-	    <delete dir="${build_directory}/prepare-build/build/logs" />
-	    <delete dir="${build_directory}/prepare-build/build/pdepend" />
-		<delete dir="${build_directory}/prepare-build/build/package" />
-		<delete dir="${build_directory}/prepare-build/build/test" />
+	    <delete dir="${build_directory}/api" />
+	    <delete dir="${build_directory}/code-browser" />
+	    <delete dir="${build_directory}/coverage" />
+	    <delete dir="${build_directory}/logs" />
+	    <delete dir="${build_directory}/pdepend" />
+		<delete dir="${build_directory}/package" />
+		<delete dir="${build_directory}/test" />
 	</target>
 	
 	<target name="prepare" description="crée les repertoires de build">
-		<mkdir dir="${build_directory}/prepare-build/build/api" />
-	    <mkdir dir="${build_directory}/prepare-build/build/code-browser" />
-	    <mkdir dir="${build_directory}/prepare-build/build/coverage" />
-	    <mkdir dir="${build_directory}/prepare-build/build/logs" />
-	    <mkdir dir="${build_directory}/prepare-build/build/pdepend" />
-		<mkdir dir="${build_directory}/prepare-build/build/package" />
-		<mkdir dir="${build_directory}/prepare-build/build/test" />
+		<mkdir dir="${build_directory}/api" />
+	    <mkdir dir="${build_directory}/code-browser" />
+	    <mkdir dir="${build_directory}/coverage" />
+	    <mkdir dir="${build_directory}/logs" />
+	    <mkdir dir="${build_directory}/pdepend" />
+		<mkdir dir="${build_directory}/package" />
+		<mkdir dir="${build_directory}/test" />
 	</target>
      		 
 	<target name="sdist" description="crée une archive de distribution des sources" depends="prepare">
 		<echo msg="Creer le fichier src.tar.gz" />
-		<tar destfile="${build_directory}/prepare-build/build/package/07zr-src.tar.gz" compression="gzip"> 
+		<tar destfile="${build_directory}/package/07zr-src.tar.gz" compression="gzip"> 
 			<fileset dir="${project.basedir}/" defaultexcludes="true">
 				<exclude name="${build_directory}/**" />
 			</fileset>
@@ -34,7 +33,7 @@
 	
 	<target name="bdist" description="crée une archive avec vendor" depends="build">
 		<echo msg="Creer le fichier bin.tar.gz" />
-		<tar destfile="${build_directory}/prepare-build/build/package/07zr-bin.tar.gz" compression="gzip"> 
+		<tar destfile="${build_directory}/package/07zr-bin.tar.gz" compression="gzip"> 
 			<fileset dir="${project.basedir}/" defaultexcludes="true">
 				<exclude name="${build_directory}/**" />
 			</fileset>
@@ -43,6 +42,7 @@
 
 	<target name="build" description="installation vendor" depends="prepare">
 		<echo msg="composer install" />
+		<c
 		<composer composer="/usr/local/bin/composer" command="install">
 			<arg value="${composer.args.no-progess}"/>
 			<arg value="${composer.args.no-interaction}"/>
